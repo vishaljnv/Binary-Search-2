@@ -1,31 +1,27 @@
-#include <bits/stdc++.h>
+class Solution {
+public:
+    int findMin(vector<int>& nums) 
+    {
+        int low = 0, high = nums.size() - 1;
 
-using namespace std;
+        while (low <= high) {
+            if (nums[low] <= nums[high]) {
+                return nums[low];
+            }
 
-int findMin(vector<int>& nums)
-{
-    int low = 0, high = nums.size() - 1, mid;
-    while (low <= high) {
-        mid = (low + (high - low) / 2);
-        if (((mid == high) ||(nums[mid] < nums[mid + 1]) &&
-            ((mid == low) || (nums[mid] < nums[mid - 1])))) {
-            break;
+            int mid = low + (high - low) / 2;
+
+            if ((mid > 0) && (nums[mid - 1] > nums[mid])) {
+                return nums[mid];
+            }
+
+            if (nums[low] <= nums[mid]) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
         }
-            
-        if (nums[mid] > nums[high]) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
-        }
+        
+        return nums[low];  //Never reaches this line
     }
-    
-    return nums[mid];
-}
-
-int main ()
-{
-    vector<int> nums = {2,4,5,7,9,0};
-    cout << "Min is " << findMin(nums) << endl;
-
-    return 0;
-}
+};
